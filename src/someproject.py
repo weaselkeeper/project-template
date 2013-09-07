@@ -29,7 +29,7 @@ logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
 ### Set some variables and constants.
-CONFIGFILE = '/etc/distaff/' + PROJECTNAME +'.conf'
+CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
 
 
 def get_config(args,CONFIGFILE):
