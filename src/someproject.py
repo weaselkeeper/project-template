@@ -63,17 +63,13 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
         description='Someproject does something')
-    parser.add_argument('-n', '--dry-run', dest='dryrun',
-        action='store_true', help='Dry run, do not actually perform action',
-        default=False)
-    parser.add_argument('-d', '--debug', dest='debug',
-        action='store_true', help='Enable debugging during execution.',
-        default=None)
-    parser.add_argument('-r', '--readable', dest='human_readable',
-        action='store_true', default=False,
+    parser.add_argument('-n', '--dry-run', action='store_true',
+        help='Dry run, do not actually perform action', default=False)
+    parser.add_argument('-d', '--debug', action='store_true',
+        help='Enable debugging during execution.', default=None)
+    parser.add_argument('-r', '--readable', action='store_true', default=False,
         help='Display output in human readable formant (as opposed to json).')
-    parser.add_argument('-c', '--config',
-        action='store', default=None,
+    parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
 
     args = parser.parse_args()
