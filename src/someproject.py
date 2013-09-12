@@ -32,7 +32,7 @@ console.setLevel(logging.WARN)
 logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
-### Set some variables and constants.
+### Set some default variables and constants.
 CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
 
 
