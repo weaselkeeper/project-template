@@ -13,6 +13,8 @@ import os
 import sys
 from ConfigParser import SafeConfigParser
 import logging
+
+# Example conditional import.
 try:
     from pymongo import Connection
 except ImportError as e:
@@ -23,6 +25,8 @@ logging.basicConfig(level=logging.WARN,
                     format='%(asctime)s %(levelname)s - %(message)s',
                     datefmt='%y.%m.%d %H:%M:%S')
 
+# Setup logging to console.
+ 
 console = logging.StreamHandler(sys.stderr)
 console.setLevel(logging.WARN)
 logging.getLogger(PROJECTNAME).addHandler(console)
@@ -57,7 +61,8 @@ def get_config(args,CONFIGFILE):
 
 # Here we start if called directly (the usual case.)
 if __name__ == "__main__":
-    """This is where we will begin when called from CLI"""
+    """This is where we will begin when called from CLI. No need for argparse
+    unless being called interactively, so import it here"""
 
     import argparse
 
