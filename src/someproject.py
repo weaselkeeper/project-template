@@ -25,16 +25,17 @@ logging.basicConfig(level=logging.WARN,
                     format='%(asctime)s %(levelname)s - %(message)s',
                     datefmt='%y.%m.%d %H:%M:%S')
 
-# Setup logging to console.
- 
-console = logging.StreamHandler(sys.stderr)
-console.setLevel(logging.WARN)
-logging.getLogger(PROJECTNAME).addHandler(console)
-log = logging.getLogger(PROJECTNAME)
 
-### Set some default variables and constants.
-CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
+def run():
+    # Setup logging to console.
+    console = logging.StreamHandler(sys.stderr)
+    console.setLevel(logging.WARN)
+    logging.getLogger(PROJECTNAME).addHandler(console)
+    log = logging.getLogger(PROJECTNAME)
 
+    ### Set some default variables and constants.
+    CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
+    return CONFIGFILE
 
 def get_config(args,CONFIGFILE):
     # Now parse the config file.  Get any and all info from config file.
@@ -64,6 +65,8 @@ if __name__ == "__main__":
     """This is where we will begin when called from CLI. No need for argparse
     unless being called interactively, so import it here"""
 
+    CONFIGFILE = run()
+
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -89,3 +92,5 @@ if __name__ == "__main__":
         CONFIGFILE = args.config
 
     _parse_config = get_config(args,CONFIGFILE)
+
+    # and now we can do, whatever it is, we do.
