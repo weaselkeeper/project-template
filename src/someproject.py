@@ -8,7 +8,7 @@ Author: Jim Richardson
 email: weaselkeeper@gmail.com
 
 """
-PROJECTNAME='someproject'
+PROJECTNAME = 'someproject'
 import os
 import sys
 from ConfigParser import SafeConfigParser
@@ -20,7 +20,6 @@ try:
 except ImportError as e:
     print 'Failed import of pymmongo, system says %s' % e
     sys.exit(1)
-
 
 
 def logging_setup():
@@ -104,7 +103,7 @@ if __name__ == "__main__":
     if args.config:
         config = args.config
 
-    _parse_config = get_config(args)
+    parsed_config = get_config(args)
 
     # and now we can do, whatever it is, we do.
-    run(args,config)
+    run(args, parsed_config)
