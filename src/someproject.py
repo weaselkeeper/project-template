@@ -17,12 +17,13 @@ import logging
 # Example conditional import.
 try:
     from pymongo import Connection
-except ImportError as e:
-    print 'Failed import of pymmongo, system says %s' % e
+except ImportError as err:
+    print 'Failed import of pymmongo, system says %s' % err
     sys.exit(1)
 
 
 def logging_setup():
+    """ Setup logging """
     logging.basicConfig(level=logging.WARN,
                         format='%(asctime)s %(levelname)s - %(message)s',
                         datefmt='%y.%m.%d %H:%M:%S')
@@ -31,13 +32,13 @@ def logging_setup():
     console = logging.StreamHandler(sys.stderr)
     console.setLevel(logging.WARN)
     logging.getLogger(PROJECTNAME).addHandler(console)
-    log = logging.getLogger(PROJECTNAME)
-    return log
+    _log = logging.getLogger(PROJECTNAME)
+    return _log
 
 
-def run(args,config):
-    ### Do, whatever it is, we do. 
-    log.debug((args,config))
+def run(args, config):
+    """ Do, whatever it is, we do. """
+    log.debug((args, config))
 
 
 def get_options():
@@ -62,17 +63,17 @@ def get_options():
 
 
 def get_config(args):
-    # Now parse the config file.  Get any and all info from config file.
+    """ Now parse the config file.  Get any and all info from config file."""
     parser = SafeConfigParser()
     configuration = {}
-    CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
+    configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME +'.conf')
     if args.config:
         config = args.config
     else:
-        if os.path.isfile(CONFIGFILE):
-            config = CONFIGFILE
+        if os.path.isfile(configfile):
+            config = configfile
         else:
-            log.warn('No config file found at %s' % CONFIGFILE)
+            log.warn('No config file found at %s' % configfile)
             sys.exit(1)
 
     parser.read(config)
@@ -80,7 +81,7 @@ def get_config(args):
     try:
         configuration['SOMEOPTION'] = args.SOMEOPTION
     except:
-        configuration['SOMEOPTION'] = parser.get('CONFIGSECTION','SOMEOPTION')
+        configuration['SOMEOPTION'] = parser.get('CONFIGSECTION', 'SOMEOPTION')
 
     log.warn('Doing things with %s' % configuration['SOMEOPTION'])
     return configuration
