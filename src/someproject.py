@@ -35,7 +35,7 @@ def run():
 
     ### Set some default variables and constants.
     CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
-    return CONFIGFILE
+    return log, CONFIGFILE
 
 def get_config(args,CONFIGFILE):
     # Now parse the config file.  Get any and all info from config file.
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     """This is where we will begin when called from CLI. No need for argparse
     unless being called interactively, so import it here"""
 
-    CONFIGFILE = run()
+    log, CONFIGFILE = run()
 
     import argparse
 
