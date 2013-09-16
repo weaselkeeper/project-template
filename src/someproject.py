@@ -14,16 +14,16 @@ import sys
 from ConfigParser import SafeConfigParser
 import logging
 
+# Example conditional import.
+try:
+    from pymongo import Connection
+except ImportError as e:
+    print 'Failed import of pymmongo, system says %s' % e
+    sys.exit(1)
+
 
 
 def logging_setup():
-# Example conditional import.
-    try:
-        from pymongo import Connection
-    except ImportError as e:
-        print 'Failed import of pymmongo, system says %s' % e
-        sys.exit(1)
-
     logging.basicConfig(level=logging.WARN,
                         format='%(asctime)s %(levelname)s - %(message)s',
                         datefmt='%y.%m.%d %H:%M:%S')
