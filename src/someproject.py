@@ -22,18 +22,16 @@ except ImportError as err:
     sys.exit(1)
 
 
-def logging_setup():
-    """ Setup logging """
-    logging.basicConfig(level=logging.WARN,
-                        format='%(asctime)s %(levelname)s - %(message)s',
-                        datefmt='%y.%m.%d %H:%M:%S')
+""" Setup logging """
+logging.basicConfig(level=logging.WARN,
+                    format='%(asctime)s %(levelname)s - %(message)s',
+                    datefmt='%y.%m.%d %H:%M:%S')
 
-    # Setup logging to console.
-    console = logging.StreamHandler(sys.stderr)
-    console.setLevel(logging.WARN)
-    logging.getLogger(PROJECTNAME).addHandler(console)
-    _log = logging.getLogger(PROJECTNAME)
-    return _log
+# Setup logging to console.
+console = logging.StreamHandler(sys.stderr)
+console.setLevel(logging.WARN)
+logging.getLogger(PROJECTNAME).addHandler(console)
+log = logging.getLogger(PROJECTNAME)
 
 
 def run(args, config):
@@ -93,7 +91,6 @@ if __name__ == "__main__":
     """This is where we will begin when called from CLI. No need for argparse
     unless being called interactively, so import it here"""
     args = get_options()
-    log = logging_setup()
 
     if args.debug:
         log.setLevel(logging.DEBUG)
