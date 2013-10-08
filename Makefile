@@ -95,6 +95,7 @@ help:
 	@echo ' builds from current source tree.'
 	@echo "Usage: make <target>"
 	@echo "Available targets are:"
+	@echo "	deb			Create deb"
 	@echo "	sources			Create tarball"
 	@echo "	srpm			Create srpm"
 	@echo "	rpm			Create rpm"
