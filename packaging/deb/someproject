@@ -1,0 +1,23 @@
+### Commented entries have reasonable defaults.
+### Uncomment to edit them.
+# Source: <source package name; defaults to package name>
+Section: misc
+Priority: optional
+Homepage: https://github.com/weaselkeeper/python-project-template
+Standards-Version: 3.9.2
+
+Package: someproject
+Version: 0.1
+Maintainer: Jim Richardson <weaselkeeper@gmail.com>
+Depends: python
+Architecture: all
+Copyright: LICENSE
+# Changelog: <changelog file; defaults to a generic changelog>
+Readme: README.md
+Files: someproject.conf /etc/someproject
+ someproject.py /usr/bin
+
+Description: Basic python project template, this is the debian part
+ Basic python project template
+ .
+ and more details about notional project
