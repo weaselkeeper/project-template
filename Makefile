@@ -50,15 +50,14 @@ authors:
 
 common: authors
 
-
+testall: authors deb srpm rpm
 
 # Build targets
 
 # Debian related.
 deb: common
 	cp src/* LICENSE conf/* README.md packaging/deb
-	cd packaging/deb
-	equivs-build $(NAME)
+	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
 build-srpm:
@@ -89,7 +88,7 @@ clean:
 	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(NAME)-$(VERSION)*.tar.bz2 $(NAME)-$(VERSION)*rpm* $(NAME)-$(VERSION)*deb*
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
-	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md
+	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
 
 # Usage
 help:
