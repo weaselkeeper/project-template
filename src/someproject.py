@@ -34,9 +34,9 @@ logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
 
-def run(args, config):
+def run(_args, _config):
     """ Do, whatever it is, we do. """
-    log.debug((args, config))
+    log.debug((_args, _config))
 
 
 def get_options():
@@ -54,10 +54,10 @@ def get_options():
     parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
 
-    args = parser.parse_args()
-    args.usage = PROJECTNAME + ".py [options]"
+    _args = parser.parse_args()
+    _args.usage = PROJECTNAME + ".py [options]"
 
-    return args
+    return _args
 
 
 def get_config(args):
