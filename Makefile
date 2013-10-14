@@ -56,7 +56,7 @@ testall: authors deb srpm rpm
 
 # Debian related.
 deb: common
-	cp src/* LICENSE conf/* README.md packaging/deb
+	cp src/* LICENSE config/* README.md packaging/deb
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
@@ -71,7 +71,7 @@ all: srpm
 sources:
 	mkdir $(NAME)
 	cp -r src/* $(NAME)
-	cp -r conf/* $(NAME)
+	cp -r config/* $(NAME)
 	mkdir -p $(SOURCEDIR)
 	mkdir -p $(WORKDIR)
 	/bin/tar -jcf $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)
