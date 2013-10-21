@@ -1,6 +1,6 @@
 # Makefile is a confused mess.  Needs significant cleanup
 NAME = someproject
-VERSION=$(shell git describe)
+VERSION=$(shell git describe | sed -e 's/-/_/g')
 RELEASE=0
 SHELL := /bin/bash
 SPECFILE = $(firstword $(wildcard *.spec))
@@ -40,7 +40,7 @@ endif
 TARSRC = $(NAME)-$(VERSION)
 
 #TODO: this should probably be a tag rather than just the latest commit.
-TAG             := $(shell git log ./ | head -1 | sed 's/commit //')
+#TAG             := $(shell git log ./ | head -1 | sed 's/commit //')
 
 ###########
 ## Some setup
@@ -85,7 +85,7 @@ rpm: sources build-rpm
 clean:
 	@echo "cleaning up "
 	@/bin/rm -rf $(WORKDIR) building $(NAME)
-	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(NAME)-$(VERSION)*.tar.bz2 $(NAME)-$(VERSION)*rpm* $(NAME)-$(VERSION)*deb*
+	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)-$(VERSION)*rpm* $(NAME)-$(VERSION)*deb*
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
 	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
