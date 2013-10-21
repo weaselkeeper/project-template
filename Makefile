@@ -1,6 +1,6 @@
 # Makefile is a confused mess.  Needs significant cleanup
 NAME = someproject
-VERSION=0.1
+VERSION=$(shell git describe)
 RELEASE=0
 SHELL := /bin/bash
 SPECFILE = $(firstword $(wildcard *.spec))
@@ -8,9 +8,9 @@ WORKDIR := $(shell pwd)/work
 SRCRPMDIR ?= $(shell pwd)
 SPECFILE = packaging/rpm/$(NAME).spec
 
-DEBFULLNAME=Jim Richardson
-DEBEMAIL=weaselkeeper@gmail.com
-SOURCE_URL=https://github.com/weaselkeeper/$(NAME).git
+DEBFULLNAME=$(shell git config --get user.name)
+DEBMAIL=$(shell git config --get user.email)
+SOURCE_URL=$(shell git config --get remote.origin.url)
 BASEDIR := $(shell git rev-parse --show-toplevel)
 
 BUILDDIR ?= $(WORKDIR)
