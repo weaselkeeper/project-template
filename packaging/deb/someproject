@@ -7,7 +7,7 @@ Homepage: https://github.com/weaselkeeper/python-project-template
 Standards-Version: 3.9.2
 
 Package: someproject
-Version: 0.1
+Version: 0.2.1
 Maintainer: Jim Richardson <weaselkeeper@gmail.com>
 Depends: python
 Architecture: all
