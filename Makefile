@@ -1,4 +1,4 @@
-# Makefile is a confused mess.  Needs significant cleanup
+# Makefile pulls info from git, will need tweeks if run from non-git repo.
 NAME = someproject
 VERSION=$(shell git describe | sed -e 's/-/_/g')
 RELEASE=0
