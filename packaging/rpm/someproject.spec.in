@@ -1,5 +1,5 @@
 Name:           someproject
-Version:        %(git describe | sed -e 's/-/_/g')
+Version:        VERSION
 Release:        0
 Summary:        A few python scripts that do something
 License:        GPLv2

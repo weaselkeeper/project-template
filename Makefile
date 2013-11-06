@@ -60,15 +60,19 @@ deb: common
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
-build-srpm:
+spec:
+	m4 -DVERSION=$(VERSION)  packaging/rpm/someproject.spec.in > packaging/rpm/someproject.spec
+
+
+build-srpm: spec
 	$(RPM) -bs $(RPM_DEFINES) $(SPECFILE)
 
-build-rpm:
+build-rpm: spec
 	$(RPM) -bb $(RPM_DEFINES) $(SPECFILE)
 
 all: srpm
 
-sources:
+sources: spec
 	mkdir $(NAME)
 	cp -r src/* $(NAME)
 	cp -r config/* $(NAME)
@@ -88,6 +92,7 @@ clean:
 	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)-$(VERSION)*rpm* $(NAME)-$(VERSION)*deb*
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
+	@rm -f packaging/rpm/$(NAME).spec
 	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
 
 # Usage
