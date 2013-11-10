@@ -1,6 +1,13 @@
 # Makefile pulls info from git, will need tweeks if run from non-git repo.
 VERSION=$(shell git describe | cut -f1 -d-  | sed -e 's/-/_/g')
 RELEASE=$(shell git describe | cut -f2- -d- | sed -e 's/-/_/g')
+# If RELEASE and VERSION are equal, it means we are on a tag, set
+# RELEASE to 0. If not, we are o ff a tag, and the above shell snippet returns
+# a good release name
+ifeq ($(RELEASE),$(VERSION))
+	RELEASE=0
+endif
+
 SHELL := /bin/bash
 SPECFILE = $(firstword $(wildcard *.spec))
 WORKDIR := $(shell pwd)/work
