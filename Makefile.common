@@ -1,3 +1,9 @@
+SHELL := /bin/bash
+SPECFILE = $(firstword $(wildcard *.spec))
+WORKDIR := $(shell pwd)/work
+SRCRPMDIR ?= $(shell pwd)
+SPECFILE = packaging/rpm/$(NAME).spec
+
 # Makefile pulls info from git, will need tweeks if run from non-git repo.
 VERSION=$(shell git describe | cut -f1 -d-  | sed -e 's/-/_/g')
 RELEASE=$(shell git describe | cut -f2- -d- | sed -e 's/-/_/g')
@@ -8,11 +14,6 @@ ifeq ($(RELEASE),$(VERSION))
 	RELEASE=0
 endif
 
-SHELL := /bin/bash
-SPECFILE = $(firstword $(wildcard *.spec))
-WORKDIR := $(shell pwd)/work
-SRCRPMDIR ?= $(shell pwd)
-SPECFILE = packaging/rpm/$(NAME).spec
 
 DEBFULLNAME=$(shell git config --get user.name)
 DEBMAIL=$(shell git config --get user.email)
