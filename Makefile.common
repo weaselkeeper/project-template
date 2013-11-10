@@ -1,6 +1,6 @@
 # Makefile pulls info from git, will need tweeks if run from non-git repo.
-VERSION=$(shell git describe | sed -e 's/-/_/g')
-RELEASE=0
+VERSION=$(shell git describe | cut -f1 -d-  | sed -e 's/-/_/g')
+RELEASE=$(shell git describe | cut -f2- -d- | sed -e 's/-/_/g')
 SHELL := /bin/bash
 SPECFILE = $(firstword $(wildcard *.spec))
 WORKDIR := $(shell pwd)/work
@@ -46,7 +46,7 @@ deb: common
 
 # Redhat related
 spec:
-	m4 -DVERSION=$(VERSION)  packaging/rpm/$(NAME).spec.in > packaging/rpm/$(NAME).spec
+	m4 -DVERSION=$(VERSION) -DRELEASE=$(RELEASE) packaging/rpm/$(NAME).spec.in > packaging/rpm/$(NAME).spec
 
 
 build-srpm: spec
