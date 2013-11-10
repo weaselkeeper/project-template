@@ -46,7 +46,7 @@ deb: common
 
 # Redhat related
 spec:
-	m4 -DVERSION=$(VERSION)  packaging/rpm/someproject.spec.in > packaging/rpm/someproject.spec
+	m4 -DVERSION=$(VERSION)  packaging/rpm/$(NAME).spec.in > packaging/rpm/$(NAME).spec
 
 
 build-srpm: spec
