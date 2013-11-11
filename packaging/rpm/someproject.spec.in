@@ -45,6 +45,4 @@ cp -r ./*.conf %{buildroot}%{_sysconfdir}/%{name}
 rm -rf %{buildroot}
 
 %changelog
-
-* Mon Aug 26 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.1
-- Initial commit of base project
+CHANGELOG
