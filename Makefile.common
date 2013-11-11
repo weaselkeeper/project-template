@@ -18,6 +18,7 @@ DEBFULLNAME=$(shell git config --get user.name)
 DEBMAIL=$(shell git config --get user.email)
 SOURCE_URL=$(shell git config --get remote.origin.url)
 BASEDIR := $(shell git rev-parse --show-toplevel)
+DEBFILE = packaging/deb/$(NAME)
 
 BUILDDIR ?= $(WORKDIR)
 RPM ?= $(shell which rpmbuild)
@@ -50,6 +51,7 @@ testall: authors deb srpm rpm
 # Debian related.
 deb: common
 	cp src/* LICENSE config/* README.md packaging/deb
+	m4 -DVERSION=$(VERSION) $(DEBFILE).in > $(DEBFILE)
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
@@ -89,7 +91,7 @@ clean:
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
 	@rm -f packaging/rpm/$(NAME).spec
-	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
+	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb packaging/deb/$(NAME)
 
 # Usage
 help:
