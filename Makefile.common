@@ -5,8 +5,10 @@ SRCRPMDIR ?= $(shell pwd)
 SPECFILE = packaging/rpm/$(NAME).spec
 
 # Makefile pulls info from git, will need tweeks if run from non-git repo.
-VERSION=$(shell git describe | cut -f1 -d-  | sed -e 's/-/_/g')
-RELEASE=$(shell git describe | cut -f2- -d- | sed -e 's/-/_/g')
+VERSION = $(shell git describe | cut -f1 -d-  | sed -e 's/-/_/g')
+RELEASE = $(shell git describe | cut -f2- -d- | sed -e 's/-/_/g')
+DEBVERSION = $(shell git describe | cut -f1 -d-)
+DEBRELEASE = $(shell git describe | cut -f2- -d- ) 
 # If RELEASE and VERSION are equal, it means we are on a tag, set
 # RELEASE to 0. If not, we are o ff a tag, and the above shell snippet returns
 # a good release name
@@ -19,12 +21,14 @@ DEBFULLNAME=$(shell git config --get user.name)
 DEBMAIL=$(shell git config --get user.email)
 SOURCE_URL=$(shell git config --get remote.origin.url)
 BASEDIR := $(shell git rev-parse --show-toplevel)
+DEBFILE = packaging/deb/$(NAME)
 
 BUILDDIR ?= $(WORKDIR)
 RPM ?= $(shell which rpmbuild)
 RPMDIR ?= $(shell pwd)
 SOURCEDIR := $(shell pwd)
 TAR := /bin/tar
+
 RPM_DEFINES := --define "_sourcedir $(SOURCEDIR)" \
 		--define "_builddir $(BUILDDIR)" \
 		--define "_srcrpmdir $(SRCRPMDIR)" \
@@ -50,12 +54,15 @@ testall: authors deb srpm rpm
 # Debian related.
 deb: common
 	cp src/* LICENSE config/* README.md packaging/deb
+	m4 -DVERSION=$(DEBVERSION)-$(DEBRELEASE) $(DEBFILE).in > $(DEBFILE)
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
 spec:
-	m4 -DVERSION=$(VERSION) -DRELEASE=$(RELEASE) packaging/rpm/$(NAME).spec.in > packaging/rpm/$(NAME).spec
-
+	m4 -DVERSION=$(VERSION) -DRELEASE=$(RELEASE) -DCHANGELOG=$(CHANGELOG) $(SPECFILE).in > $(SPECFILE)
+	git log --simplify-by-decoration \
+	--format="* %cd %aN - %h %n %s%d%n" \
+	--date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> $(SPECFILE)
 
 build-srpm: spec
 	$(RPM) -bs $(RPM_DEFINES) $(SPECFILE)
@@ -87,7 +94,7 @@ clean:
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
 	@rm -f packaging/rpm/$(NAME).spec
-	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
+	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb packaging/deb/$(NAME)
 
 # Usage
 help:
@@ -100,3 +107,4 @@ help:
 	@echo "	srpm			Create srpm"
 	@echo "	rpm			Create rpm"
 	@echo "	clean			Remove work dir"
+	@echo "	testall			Build all the things"
