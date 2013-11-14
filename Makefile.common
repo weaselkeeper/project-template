@@ -1,4 +1,6 @@
 # Makefile pulls info from git, will need tweeks if run from non-git repo.
+# But since I only use git, someone else can make the changes for other SCM 
+# systems.
 VERSION = $(shell git describe | cut -f1 -d-  | sed -e 's/-/_/g')
 RELEASE = $(shell git describe | cut -f2- -d- | sed -e 's/-/_/g')
 DEBVERSION = $(shell git describe | cut -f1 -d-)
@@ -10,33 +12,33 @@ ifeq ($(RELEASE),$(VERSION))
 	RELEASE=0
 endif
 
+#Command utilities
 SHELL := /bin/bash
-SPECFILE = $(firstword $(wildcard *.spec))
-WORKDIR := $(shell pwd)/work
-SRCRPMDIR ?= $(shell pwd)
-SPECFILE = packaging/rpm/$(NAME).spec
+TAR := /bin/tar
+RPM ?= $(shell which rpmbuild)
 
-DEBFULLNAME=$(shell git config --get user.name)
-DEBMAIL=$(shell git config --get user.email)
+#General variables.
+WORKDIR := $(shell pwd)/work
+FULLNAME=$(shell git config --get user.name)
+EMAIL=$(shell git config --get user.email)
 SOURCE_URL=$(shell git config --get remote.origin.url)
 BASEDIR := $(shell git rev-parse --show-toplevel)
-DEBFILE = packaging/deb/$(NAME)
+TARSRC = $(NAME)-$(VERSION)
 
+# RPM Specific variables
 BUILDDIR ?= $(WORKDIR)
-RPM ?= $(shell which rpmbuild)
 RPMDIR ?= $(shell pwd)
 SOURCEDIR := $(shell pwd)
-TAR := /bin/tar
+SRCRPMDIR ?= $(shell pwd)
+SPECFILE = packaging/rpm/$(NAME).spec
 
 RPM_DEFINES := --define "_sourcedir $(SOURCEDIR)" \
 		--define "_builddir $(BUILDDIR)" \
 		--define "_srcrpmdir $(SRCRPMDIR)" \
 		--define "_rpmdir $(RPMDIR)" \
 
-TARSRC = $(NAME)-$(VERSION)
-
-#TODO: this should probably be a tag rather than just the latest commit.
-#TAG             := $(shell git log ./ | head -1 | sed 's/commit //')
+#Deb specific variables
+DEBFILE = packaging/deb/$(NAME)
 
 ###########
 ## Some setup
