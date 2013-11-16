@@ -8,7 +8,7 @@ Standards-Version: 3.9.2
 
 Package: someproject
 Version: VERSION
-Maintainer: Jim Richardson <weaselkeeper@gmail.com>
+Maintainer: FULLNAME <EMAIL>
 Depends: python
 Architecture: all
 Copyright: LICENSE

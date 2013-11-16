@@ -18,7 +18,6 @@ ifeq ($(RELEASE),$(VERSION))
 	RELEASE=0
 endif
 
-=======
 #Command utilities
 SHELL := /bin/bash
 TAR := /bin/tar
@@ -62,7 +61,7 @@ testall: authors deb srpm rpm
 # Debian related.
 deb: common
 	cp src/* LICENSE config/* README.md packaging/deb
-	m4 -DVERSION=$(DEBVERSION)-$(DEBRELEASE) $(DEBFILE).in > $(DEBFILE)
+	m4 -DVERSION=$(DEBVERSION)-$(DEBRELEASE) -DFULLNAME="$(FULLNAME)" -DEMAIL=$(EMAIL) $(DEBFILE).in > $(DEBFILE)
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
 # Redhat related
