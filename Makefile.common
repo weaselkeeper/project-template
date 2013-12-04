@@ -54,7 +54,7 @@ authors:
 
 common: authors
 
-testall: authors deb srpm rpm
+check: authors deb srpm rpm clean
 
 # Build targets
 
@@ -114,4 +114,4 @@ help:
 	@echo "	srpm			Create srpm"
 	@echo "	rpm			Create rpm"
 	@echo "	clean			Remove work dir"
-	@echo "	testall			Build all the things"
+	@echo "	check			Build all the things, then clean them up"
