@@ -46,13 +46,15 @@ def get_options():
     parser = argparse.ArgumentParser(
         description='Someproject does something')
     parser.add_argument('-n', '--dry-run', action='store_true',
-        help='Dry run, do not actually perform action', default=False)
+                        help='Dry run, do not actually perform action',
+                        default=False)
     parser.add_argument('-d', '--debug', action='store_true',
-        help='Enable debugging during execution.', default=None)
+                        help='Enable debugging during execution.',
+                        default=None)
     parser.add_argument('-r', '--readable', action='store_true', default=False,
-        help='Display output in human readable formant (as opposed to json).')
+                        help='Display output in human readable formant.')
     parser.add_argument('-c', '--config', action='store', default=None,
-        help='Specify a path to an alternate config file')
+                        help='Specify a path to an alternate config file')
 
     _args = parser.parse_args()
     _args.usage = PROJECTNAME + ".py [options]"
@@ -64,7 +66,7 @@ def get_config(args):
     """ Now parse the config file.  Get any and all info from config file."""
     parser = SafeConfigParser()
     configuration = {}
-    configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME +'.conf')
+    configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME + '.conf')
     if args.config:
         config = args.config
     else:
@@ -83,8 +85,6 @@ def get_config(args):
 
     log.warn('Doing things with %s' % configuration['SOMEOPTION'])
     return configuration
-
-
 
 # Here we start if called directly (the usual case.)
 if __name__ == "__main__":
