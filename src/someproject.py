@@ -22,7 +22,7 @@ except ImportError as err:
     sys.exit(1)
 
 
-""" Setup logging """
+# Setup logging
 logging.basicConfig(level=logging.WARN,
                     format='%(asctime)s %(levelname)s - %(message)s',
                     datefmt='%y.%m.%d %H:%M:%S')
@@ -88,8 +88,8 @@ def get_config(args):
 
 # Here we start if called directly (the usual case.)
 if __name__ == "__main__":
-    """This is where we will begin when called from CLI. No need for argparse
-    unless being called interactively, so import it here"""
+    # This is where we will begin when called from CLI. No need for argparse
+    # unless being called interactively, so import it here
     args = get_options()
 
     if args.debug:
