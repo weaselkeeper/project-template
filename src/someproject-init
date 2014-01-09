@@ -1,0 +1,76 @@
+#!/bin/sh
+# Starts and stops someproject.
+#
+#
+# chkconfig: - 85 15
+# description: someproject is a project, that does something.
+# processname: someproject
+# pidfile: /var/run/someproject.pid
+
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Configure your values here
+
+PROG=someproject
+
+PID_FILE=/var/run/$PROG.pid
+LOG_FILE=/var/log/$PROG.log
+SOMEPROJ_EXE=/usr/bin/someproject.py
+SOMEPROJ_OPTS='-d foo -s bar'
+
+#
+
+prog=${SOMEPROJ_EXE##*/}
+lockfile=/var/lock/subsys/$PROG
+
+
+
+start()
+{
+    echo -n $"Starting $PROG: "
+    daemon $SOMEPROJ_EXE  $SOMEPROJ_OPTS >> $LOG_FILE &
+    rv=$?
+    echo
+    [ $rv -eq 0 ] && touch $lockfile
+    return $rv
+}
+
+stop()
+{
+    echo -n $"Shutting down $PROG: "
+    killproc $prog
+    rv=$?
+    echo
+    [ $rv -eq 0 ] && rm -f $lockfile
+    return $rv
+}
+
+restart()
+{
+    stop
+    start
+}
+
+case "$1" in
+    start|stop|restart)
+        $1
+        ;;
+    force-reload)
+        restart
+        ;;
+    status)
+        status $prog
+        ;;
+    try-restart|condrestart)
+        if status $prog >/dev/null ; then
+            restart
+        fi
+        ;;
+    *)
+     echo $"Usage: $0 {start|stop|status|restart}"
+     exit 2
+     ;;
+esac
+
