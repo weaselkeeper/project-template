@@ -28,13 +28,15 @@ rm -rf %{buildroot}
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/%{name}
 #%{__mkdir_p} %{buildroot}%{_datadir}/%{name}/plugins
 %{__mkdir_p} %{buildroot}%{_localstatedir}/log/%{name}
+%{__mkdir_p} %{buildroot}%{_sysconfdir}/init.d
 #cp -r ./plugins/*.py %{buildroot}%{_datadir}/%{name}/plugins/
 cp -r ./*.py %{buildroot}%{_bindir}/
 cp -r ./*.conf %{buildroot}%{_sysconfdir}/%{name}
-
+cp someproject-init %{buildroot}%{_sysconfdir}/init.d/%{name}
 %files
 %{_bindir}/*.py
 %{_sysconfdir}/%{name}/*
+%{_sysconfdir}/init.d/%{name}
 #%{_datadir}/%{name}/*
 
 %pre
