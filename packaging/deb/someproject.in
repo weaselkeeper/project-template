@@ -16,6 +16,7 @@ Copyright: LICENSE
 Readme: README.md
 Files: someproject.conf /etc/someproject
  someproject.py /usr/bin
+ someproject-init /etc/init.d
 
 Description: Basic python project template, this is the debian part
  Basic python project template

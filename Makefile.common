@@ -101,7 +101,7 @@ clean:
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
 	@rm -f packaging/rpm/$(NAME).spec
-	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb packaging/deb/$(NAME)
+	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb packaging/deb/$(NAME) packaging/deb/$(NAME)-init
 
 # Usage
 help:
