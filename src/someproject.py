@@ -73,17 +73,20 @@ def get_config(args):
         if os.path.isfile(configfile):
             config = configfile
         else:
-            log.warn('No config file found at %s' % configfile)
+            log.warn('No config file found at %s', configfile)
             sys.exit(1)
 
     parser.read(config)
-
     try:
-        configuration['SOMEOPTION'] = args.SOMEOPTION
+        if args.SOMEOPTION:
+            configuration['SOMEOPTION'] = args.SOMEOPTION
+        else:
+            configuration['SOMEOPTION'] = parser.get('CONFIGSECTION',
+                                                     'SOMEOPTION')
     except:
-        configuration['SOMEOPTION'] = parser.get('CONFIGSECTION', 'SOMEOPTION')
+        log.warn('no setting for %s found', 'SOMEOPTION')
 
-    log.warn('Doing things with %s' % configuration['SOMEOPTION'])
+    log.warn('Doing things with %s', configuration['SOMEOPTION'])
     return configuration
 
 # Here we start if called directly (the usual case.)
