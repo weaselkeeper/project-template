@@ -68,15 +68,15 @@ def get_config(args):
     configuration = {}
     configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME + '.conf')
     if args.config:
-        config = args.config
+        _config = args.config
     else:
         if os.path.isfile(configfile):
-            config = configfile
+            _config = configfile
         else:
             log.warn('No config file found at %s', configfile)
             sys.exit(1)
 
-    parser.read(config)
+    parser.read(_config)
     try:
         if args.SOMEOPTION:
             configuration['SOMEOPTION'] = args.SOMEOPTION
