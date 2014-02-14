@@ -62,7 +62,7 @@ def get_options():
     return _args
 
 
-def get_config(args):
+def get_config():
     """ Now parse the config file.  Get any and all info from config file."""
     parser = SafeConfigParser()
     configuration = {}
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     if args.config:
         config = args.config
 
-    parsed_config = get_config(args)
+    parsed_config = get_config()
 
     # and now we can do, whatever it is, we do.
     run(args, parsed_config)
