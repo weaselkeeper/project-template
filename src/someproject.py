@@ -34,9 +34,12 @@ logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
 
-def run(_args, _config):
+def run():
     """ Do, whatever it is, we do. """
-    log.debug((_args, _config))
+    # parse config
+    parsed_config = get_config()
+
+    log.debug((args, parsed_config))
 
 
 def get_options():
@@ -100,11 +103,5 @@ if __name__ == "__main__":
     else:
         log.setLevel(logging.WARN)
 
-    # Override config file location if present as option
-    if args.config:
-        config = args.config
-
-    parsed_config = get_config()
-
-    # and now we can do, whatever it is, we do.
-    run(args, parsed_config)
+        # and now we can do, whatever it is, we do.
+    run()
