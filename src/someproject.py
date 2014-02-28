@@ -40,7 +40,7 @@ def run():
     parsed_config = get_config()
 
     log.debug((args, parsed_config))
-
+    return
 
 def get_options():
     """ Parse the command line options"""
@@ -104,4 +104,4 @@ if __name__ == "__main__":
         log.setLevel(logging.WARN)
 
         # and now we can do, whatever it is, we do.
-    run()
+    sys.exit(run())
