@@ -14,13 +14,6 @@ import sys
 from ConfigParser import SafeConfigParser
 import logging
 
-# Example conditional import.
-try:
-    from pymongo import Connection
-except ImportError as err:
-    print 'Failed import of pymmongo, system says %s' % err
-    sys.exit(1)
-
 
 # Setup logging
 logging.basicConfig(level=logging.WARN,
@@ -38,9 +31,10 @@ def run():
     """ Do, whatever it is, we do. """
     # parse config
     parsed_config = get_config()
-
+    print parsed_config
     log.debug((args, parsed_config))
     return
+
 
 def get_options():
     """ Parse the command line options"""
@@ -58,6 +52,8 @@ def get_options():
                         help='Display output in human readable formant.')
     parser.add_argument('-c', '--config', action='store', default=None,
                         help='Specify a path to an alternate config file')
+    parser.add_argument('-s', '--someoption', action='store', dest='SOMEOPTION',
+                        help='bogus option for explanations')
 
     _args = parser.parse_args()
     _args.usage = PROJECTNAME + ".py [options]"
@@ -67,6 +63,7 @@ def get_options():
 
 def get_config():
     """ Now parse the config file.  Get any and all info from config file."""
+    log.debug('Now in get_config')
     parser = SafeConfigParser()
     configuration = {}
     configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME + '.conf')
@@ -80,16 +77,13 @@ def get_config():
             sys.exit(1)
 
     parser.read(_config)
-    try:
-        if args.SOMEOPTION:
-            configuration['SOMEOPTION'] = args.SOMEOPTION
-        else:
-            configuration['SOMEOPTION'] = parser.get('CONFIGSECTION',
-                                                     'SOMEOPTION')
-    except:
-        log.warn('no setting for %s found', 'SOMEOPTION')
 
-    log.warn('Doing things with %s', configuration['SOMEOPTION'])
+    if args.SOMEOPTION:
+        configuration['SOMEOPTION'] = args.SOMEOPTION
+    else:
+        configuration['SOMEOPTION'] = parser.get('CONFIGSECTION', 'SOMEOPTION')
+    log.debug('Doing things with %s', configuration['SOMEOPTION'])
+    log.debug('leaving get_config')
     return configuration
 
 # Here we start if called directly (the usual case.)
