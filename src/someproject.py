@@ -27,12 +27,12 @@ logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
 
-def run(args):
+def run(_args):
     """ Do, whatever it is, we do. """
     # parse config
     parsed_config = get_config(args)
     print parsed_config
-    log.debug((args, parsed_config))
+    log.debug((_args, parsed_config))
     return
 
 
