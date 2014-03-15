@@ -27,10 +27,10 @@ logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
 
-def run():
+def run(args):
     """ Do, whatever it is, we do. """
     # parse config
-    parsed_config = get_config()
+    parsed_config = get_config(args)
     print parsed_config
     log.debug((args, parsed_config))
     return
@@ -61,7 +61,7 @@ def get_options():
     return _args
 
 
-def get_config():
+def get_config(args):
     """ Now parse the config file.  Get any and all info from config file."""
     log.debug('Now in get_config')
     parser = SafeConfigParser()
@@ -98,4 +98,4 @@ if __name__ == "__main__":
         log.setLevel(logging.WARN)
 
         # and now we can do, whatever it is, we do.
-    sys.exit(run())
+    sys.exit(run(args))
