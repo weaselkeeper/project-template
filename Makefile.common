@@ -21,7 +21,6 @@ endif
 #Command utilities
 SHELL := /bin/bash
 TAR := /bin/tar
-RPM ?= $(shell which rpmbuild)
 
 #General variables.
 WORKDIR := $(shell pwd)/work
@@ -32,6 +31,7 @@ BASEDIR := $(shell git rev-parse --show-toplevel)
 TARSRC = $(NAME)-$(VERSION)
 
 # RPM Specific variables
+RPM ?= $(shell which rpmbuild)
 BUILDDIR ?= $(WORKDIR)
 RPMDIR ?= $(shell pwd)
 SOURCEDIR := $(shell pwd)
@@ -66,10 +66,14 @@ deb: common
 
 # Redhat related
 spec:
+ifndef $(RPM)
+	@exit 'No rpm build command  available'
+else
 	m4 -DVERSION=$(VERSION) -DRELEASE=$(RELEASE) -DCHANGELOG=$(CHANGELOG) $(SPECFILE).in > $(SPECFILE)
 	git log --simplify-by-decoration \
 	--format="* %cd %aN - %h %n %s%d%n" \
 	--date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> $(SPECFILE)
+endif
 
 build-srpm: spec
 	$(RPM) -bs $(RPM_DEFINES) $(SPECFILE)
