@@ -41,7 +41,7 @@ email: weaselkeeper@gmail.com
 PROJECTNAME = 'someproject'
 import os
 import sys
-from ConfigParser import SafeConfigParser
+import ConfigParser
 import logging
 
 
@@ -94,7 +94,7 @@ def get_options():
 def get_config(args):
     """ Now parse the config file.  Get any and all info from config file."""
     log.debug('Now in get_config')
-    parser = SafeConfigParser()
+    parser = ConfigParser.SafeConfigParser()
     configuration = {}
     configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME + '.conf')
     if args.config:
