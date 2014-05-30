@@ -60,7 +60,7 @@ log = logging.getLogger(PROJECTNAME)
 def run(_args):
     """ Do, whatever it is, we do. """
     # parse config
-    parsed_config = get_config(args)
+    parsed_config = get_config(_args)
     print parsed_config
     log.debug((_args, parsed_config))
     return
@@ -98,7 +98,7 @@ def get_config(_args):
     configuration = {}
     configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME + '.conf')
     if _args.config:
-        _config = args.config
+        _config = _args.config
     else:
         if os.path.isfile(configfile):
             _config = configfile
@@ -109,23 +109,28 @@ def get_config(_args):
     parser.read(_config)
 
     if _args.SOMEOPTION:
-        configuration['SOMEOPTION'] = args.SOMEOPTION
+        configuration['SOMEOPTION'] = _args.SOMEOPTION
     else:
         configuration['SOMEOPTION'] = parser.get('CONFIGSECTION', 'SOMEOPTION')
     log.debug('Doing things with %s', configuration['SOMEOPTION'])
     log.debug('leaving get_config')
     return configuration
 
+def get_args():
+    """ we only run if called from main """
+    _args = get_options()
+
+    if _args.debug:
+        log.setLevel(logging.DEBUG)
+    else:
+        log.setLevel(logging.WARN)
+    return _args
+
+
 # Here we start if called directly (the usual case.)
 if __name__ == "__main__":
     # This is where we will begin when called from CLI. No need for argparse
     # unless being called interactively, so import it here
-    args = get_options()
-
-    if args.debug:
-        log.setLevel(logging.DEBUG)
-    else:
-        log.setLevel(logging.WARN)
-
-        # and now we can do, whatever it is, we do.
+    args = get_args()
+    # and now we can do, whatever it is, we do.
     sys.exit(run(args))
