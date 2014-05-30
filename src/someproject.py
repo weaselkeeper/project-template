@@ -91,13 +91,13 @@ def get_options():
     return _args
 
 
-def get_config(args):
+def get_config(_args):
     """ Now parse the config file.  Get any and all info from config file."""
     log.debug('Now in get_config')
     parser = ConfigParser.SafeConfigParser()
     configuration = {}
     configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME + '.conf')
-    if args.config:
+    if _args.config:
         _config = args.config
     else:
         if os.path.isfile(configfile):
@@ -108,7 +108,7 @@ def get_config(args):
 
     parser.read(_config)
 
-    if args.SOMEOPTION:
+    if _args.SOMEOPTION:
         configuration['SOMEOPTION'] = args.SOMEOPTION
     else:
         configuration['SOMEOPTION'] = parser.get('CONFIGSECTION', 'SOMEOPTION')
