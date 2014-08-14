@@ -64,6 +64,9 @@ deb: common
 	m4 -DVERSION=$(DEBVERSION)-$(DEBRELEASE) -DFULLNAME="$(FULLNAME)" -DEMAIL=$(EMAIL) $(DEBFILE).in > $(DEBFILE)
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
+debian: deb
+	# either deb or debian works now
+
 # Redhat related
 spec:
 ifndef $(RPM)
