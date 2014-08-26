@@ -21,6 +21,7 @@ endif
 #Command utilities
 SHELL := /bin/bash
 TAR := /bin/tar
+RPM ?= $(shell which rpmbuild)
 
 #General variables.
 WORKDIR := $(shell pwd)/work
@@ -31,7 +32,6 @@ BASEDIR := $(shell git rev-parse --show-toplevel)
 TARSRC = $(NAME)-$(VERSION)
 
 # RPM Specific variables
-RPM ?= $(shell which rpmbuild)
 BUILDDIR ?= $(WORKDIR)
 RPMDIR ?= $(shell pwd)
 SOURCEDIR := $(shell pwd)
@@ -64,19 +64,12 @@ deb: common
 	m4 -DVERSION=$(DEBVERSION)-$(DEBRELEASE) -DFULLNAME="$(FULLNAME)" -DEMAIL=$(EMAIL) $(DEBFILE).in > $(DEBFILE)
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
-debian: deb
-	# either deb or debian works now
-
 # Redhat related
 spec:
-ifndef $(RPM)
-	@exit 'No rpm build command  available'
-else
 	m4 -DVERSION=$(VERSION) -DRELEASE=$(RELEASE) -DCHANGELOG=$(CHANGELOG) $(SPECFILE).in > $(SPECFILE)
 	git log --simplify-by-decoration \
 	--format="* %cd %aN - %h %n %s%d%n" \
 	--date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> $(SPECFILE)
-endif
 
 build-srpm: spec
 	$(RPM) -bs $(RPM_DEFINES) $(SPECFILE)
@@ -86,7 +79,7 @@ build-rpm: spec
 
 all: srpm
 
-sources:
+sources: spec
 	mkdir $(NAME)
 	cp -r src/* $(NAME)
 	cp -r config/* $(NAME)
@@ -95,9 +88,9 @@ sources:
 	/bin/tar -jcf $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)
 	@rm -rf $(NAME)
 
-srpm: sources spec build-srpm
+srpm: sources build-srpm
 
-rpm: sources spec build-rpm
+rpm: sources build-rpm
 
 
 # Cleanup
