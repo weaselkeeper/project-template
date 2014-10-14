@@ -23,3 +23,9 @@ Description: Basic python project template, this is the debian part
  .
  and more details about notional project
 
+# Example for a post install script.
+File: postinst
+  #!/bin/bash
+  echo "Hellow world"
+  /bin/uname -a
+
