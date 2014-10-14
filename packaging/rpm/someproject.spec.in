@@ -43,6 +43,9 @@ cp someproject-init %{buildroot}%{_sysconfdir}/init.d/%{name}
 
 %post
 
+/bin/echo "Hello world"
+/bin/uname -a
+
 %clean
 rm -rf %{buildroot}
 
