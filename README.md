@@ -13,4 +13,5 @@ someproject
     └── someproject.py  The project
 
 Version and some other information is pulled from git, so makefile won't work
-if you are not in a git repo.  Might work on that later.
+if you are not in a git repo. Build targets (make rpm, make deb, etc) Require at least
+on git tag to have been created. Might work on that later.
