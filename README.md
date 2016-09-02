@@ -1,17 +1,22 @@
 Basic template for python projects.
 
-someproject
-├── LICENSE   (GPL2 by default)
-├── Makefile  (Has make targets for source, rpm, srpm packages, deb
-├── packaging
-│   ├── authors.sh
-│   ├── deb  Working using equivs, will likely move that to debtools soon
-│   └── rpm
-│       └── someproject.spec
-├── README.md
-└── src
-    └── someproject.py  The project
-
 Version and some other information is pulled from git, so makefile won't work
 if you are not in a git repo. Build targets (make rpm, make deb, etc) Require at least
-on git tag to have been created. Might work on that later.
+one git tag to have been created.
+
+There are sample rpm spec and debian control files, as well as init scripts, and other tidbits.
+
+
+Makefile for someproject, currently supports deb and rpm 
+ builds from current source tree.
+
+
+Usage: make <target>
+Available targets are:
+	deb			Create deb
+	sources			Create tarball
+	srpm			Create srpm
+	rpm			Create rpm
+	clean			Remove work dir
+	check			Build all the things, then clean them up
+
