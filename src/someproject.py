@@ -29,8 +29,6 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ###
-
-
 """
 
 License: GPL V2 See LICENSE file
@@ -44,11 +42,11 @@ import sys
 import ConfigParser
 import logging
 
-
 # Setup logging
-logging.basicConfig(level=logging.WARN,
-                    format='%(asctime)s %(levelname)s - %(message)s',
-                    datefmt='%y.%m.%d %H:%M:%S')
+logging.basicConfig(
+    level=logging.WARN,
+    format='%(asctime)s %(levelname)s - %(message)s',
+    datefmt='%y.%m.%d %H:%M:%S')
 
 # Setup logging to console.
 console = logging.StreamHandler(sys.stderr)
@@ -61,7 +59,7 @@ def run(_args):
     """ Do, whatever it is, we do. """
     # parse config
     parsed_config = get_config(_args)
-    print parsed_config
+    print(parsed_config)
     log.debug((_args, parsed_config))
     return
 
@@ -70,20 +68,37 @@ def get_options():
     """ Parse the command line options"""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description='Someproject does something')
-    parser.add_argument('-n', '--dry-run', action='store_true',
-                        help='Dry run, do not actually perform action',
-                        default=False)
-    parser.add_argument('-d', '--debug', action='store_true',
-                        help='Enable debugging during execution.',
-                        default=None)
-    parser.add_argument('-r', '--readable', action='store_true', default=False,
-                        help='Display output in human readable formant.')
-    parser.add_argument('-c', '--config', action='store', default=None,
-                        help='Specify a path to an alternate config file')
-    parser.add_argument('-s', '--someoption', action='store', dest='SOMEOPTION',
-                        help='bogus option for explanations')
+    parser = argparse.ArgumentParser(description='Someproject does something')
+    parser.add_argument(
+        '-n',
+        '--dry-run',
+        action='store_true',
+        help='Dry run, do not actually perform action',
+        default=False)
+    parser.add_argument(
+        '-d',
+        '--debug',
+        action='store_true',
+        help='Enable debugging during execution.',
+        default=None)
+    parser.add_argument(
+        '-r',
+        '--readable',
+        action='store_true',
+        default=False,
+        help='Display output in human readable formant.')
+    parser.add_argument(
+        '-c',
+        '--config',
+        action='store',
+        default=None,
+        help='Specify a path to an alternate config file')
+    parser.add_argument(
+        '-s',
+        '--someoption',
+        action='store',
+        dest='SOMEOPTION',
+        help='bogus option for explanations')
 
     _args = parser.parse_args()
     _args.usage = PROJECTNAME + ".py [options]"
@@ -115,6 +130,7 @@ def get_config(_args):
     log.debug('Doing things with %s', configuration['SOMEOPTION'])
     log.debug('leaving get_config')
     return configuration
+
 
 def get_args():
     """ we only run if called from main """
